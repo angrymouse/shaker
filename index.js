@@ -89,8 +89,10 @@ client.on('interaction', async interaction => {
 
 	if (interaction.commandName === 'setwelcomechannel' ) {
 		if (interaction.member.permissions.has('ADMINISTRATOR')) {
+			if (interaction.options[0].value.type !== 'GUILD_TEXT') {
+				return interaction.reply('You must specify a text channel.');
 			interaction.guild.settings.set('welcomeChannel', interaction.options[0].value);
-			interaction.reply(`The welcome channel has been set to <@&${interaction.options[0].value}>.`, { ephemeral: true });
+			interaction.reply(`The welcome channel has been set to <#${interaction.options[0].value}>.`, { ephemeral: true });
 		} else {
 			return interaction.reply('You must be a server administrator to use this command.', { ephemeral: true });
 		}
@@ -99,7 +101,7 @@ client.on('interaction', async interaction => {
 	if (interaction.commandName === 'setwelcomemessage' ) {
 		if (interaction.member.permissions.has('ADMINISTRATOR')) {
 			interaction.guild.settings.set('welcomeMessage', interaction.options[0].value);
-			interaction.reply(`The welcome message has been set to <@&${interaction.options[0].value}>.`, { ephemeral: true });
+			interaction.reply(`The welcome message has been set to ${interaction.options[0].value}.`, { ephemeral: true });
 		} else {
 			return interaction.reply('You must be a server administrator to use this command.', { ephemeral: true });
 		}

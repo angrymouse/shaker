@@ -91,6 +91,7 @@ client.on('interaction', async interaction => {
 		if (interaction.member.permissions.has('ADMINISTRATOR')) {
 			if (interaction.options[0].value.type !== 'GUILD_TEXT') {
 				return interaction.reply('You must specify a text channel.');
+			}
 			interaction.guild.settings.set('welcomeChannel', interaction.options[0].value);
 			interaction.reply(`The welcome channel has been set to <#${interaction.options[0].value}>.`, { ephemeral: true });
 		} else {

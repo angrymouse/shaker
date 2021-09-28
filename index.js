@@ -158,7 +158,8 @@ client.on('interaction', async interaction => {
 					interaction.member.roles.add(role);
 				}
 
-				const welcomeChannel = interaction.guild.settings.get('welcomeChannel');
+				const welcomeChannelId = interaction.guild.settings.get('welcomeChannel');
+				const welcomeChannel = await client.channels.fetch(welcomeChannelId);
 				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
 				if (welcomeChannel && welcomeMessage) {
 					const fetchedLogs = await interaction.guild.fetchAuditLogs({

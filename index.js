@@ -153,11 +153,6 @@ client.on('interaction', async interaction => {
 		whitelist.push(interaction.member.id);
 		interaction.member.setNickname(`${uri.punydecode(domain)}/`, 'User verified Handshake domain.')
 			.then(async () => {
-				const role = interaction.guild.settings.get('verifiedRole');
-				if (role) {
-					interaction.member.roles.add(role);
-				}
-
 				const welcomeChannelId = interaction.guild.settings.get('welcomeChannel');
 				const welcomeChannel = await client.channels.fetch(welcomeChannelId);
 				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
@@ -173,6 +168,11 @@ client.on('interaction', async interaction => {
 						const messageToSend = welcomeMessage.replace('$USER$', `<@${interaction.member.id}>`);
 						welcomeChannel.send(messageToSend);
 					}
+				}
+
+				const role = interaction.guild.settings.get('verifiedRole');
+				if (role) {
+					interaction.member.roles.add(role);
 				}
 
 

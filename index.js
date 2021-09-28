@@ -90,7 +90,7 @@ client.on('interaction', async interaction => {
 	if (interaction.commandName === 'setwelcomechannel' ) {
 		if (interaction.member.permissions.has('ADMINISTRATOR')) {
 			const id = interaction.options[0].value;
-			const channel = client.channels.get(id);
+			const channel = client.channels.fetch(id);
 			if (!channel.viewable) {
 				return interaction.reply('I cannot view this channel.', { ephemeral: true });
 			}

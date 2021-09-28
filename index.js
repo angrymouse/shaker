@@ -89,8 +89,12 @@ client.on('interaction', async interaction => {
 
 	if (interaction.commandName === 'setwelcomechannel' ) {
 		if (interaction.member.permissions.has('ADMINISTRATOR')) {
-			if (interaction.options[0].value.type !== 'GUILD_TEXT') {
-				console.log(interaction.options[0].value.type);
+			const id = interaction.options[0].value;
+			const channel = client.channels.get(id);
+			if (!channel.viewable) {
+				return interaction.reply('I cannot view this channel.' { ephemeral: true });
+			}
+			if (channel.type !== 'GUILD_TEXT') {
 				return interaction.reply('You must specify a text channel.');
 			}
 			interaction.guild.settings.set('welcomeChannel', interaction.options[0].value);

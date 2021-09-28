@@ -161,7 +161,7 @@ client.on('interaction', async interaction => {
 				const welcomeChannel = interaction.guild.settings.get('welcomeChannel');
 				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
 				if (welcomeChannel && welcomeMessage) {
-					const fetchedLogs = interaction.guild.fetchAuditLogs({
+					const fetchedLogs = await interaction.guild.fetchAuditLogs({
 						type: 'MEMBER_ROLE_UPDATE',
 						user: client.user
 					})

@@ -47,7 +47,7 @@ client.on('guildMemberAdd', member => {
 
 var whitelist = [];
 client.on('guildMemberUpdate', (oldMember, newMember) => {
-	if (oldMember.displayName === newMember.displayName) {
+	if (oldMember.displayName.toLowerCase() === newMember.displayName.toLowerCase()) {
 		return;
 	}
 

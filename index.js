@@ -87,6 +87,24 @@ client.on('interaction', async interaction => {
 		}
 	}
 
+	if (interaction.commandName === 'setwelcomechannel' ) {
+		if (interaction.member.permissions.has('ADMINISTRATOR')) {
+			interaction.guild.settings.set('welcomeChannel', interaction.options[0].value);
+			interaction.reply(`The welcome channel has been set to <@&${interaction.options[0].value}>.`, { ephemeral: true });
+		} else {
+			return interaction.reply('You must be a server administrator to use this command.', { ephemeral: true });
+		}
+	}
+
+	if (interaction.commandName === 'setwelcomemessage' ) {
+		if (interaction.member.permissions.has('ADMINISTRATOR')) {
+			interaction.guild.settings.set('welcomeMessage', interaction.options[0].value);
+			interaction.reply(`The welcome message has been set to <@&${interaction.options[0].value}>.`, { ephemeral: true });
+		} else {
+			return interaction.reply('You must be a server administrator to use this command.', { ephemeral: true });
+		}
+	}
+
 	if (interaction.commandName === 'verify') {
 		const input = interaction.options[0].value
 		const domain = uri.punycode(input.replace(/\/+$/, ''));
@@ -133,6 +151,22 @@ client.on('interaction', async interaction => {
 				const role = interaction.guild.settings.get('verifiedRole');
 				if (role) {
 					interaction.member.roles.add(role);
+				}
+
+				const welcomeChannel = interaction.guild.settings.get('welcomeChannel');
+				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
+				if (welcomeChannel && welcomeMessage) {
+					const fetchedLogs = interaction.guild.fetchAuditLogs({
+						type: 'MEMBER_ROLE_UPDATE',
+						user: client.user
+					})
+
+					const entry = fetchedLogs.entries.find(entry => entry.target.id === interaction.member.id);
+
+					if (!entry) {
+						const messageToSend = welcomeMessage.replace('$USER$', `<@${interaction.member.id}>`);
+						welcomeChannel.send(messageToSend);
+					}
 				}
 
 

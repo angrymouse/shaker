@@ -180,6 +180,7 @@ client.on('interaction', async interaction => {
 				return interaction.reply(`Your name was successfully verified! Your new nickname is: \`${uri.punydecode(domain)}/\``, { ephemeral: true });
 			})
 			.catch(err => {
+				console.warn(err);
 				whitelist = whitelist.filter(id => id !== interaction.member.id);
 				if (err.message === 'Missing Permissions') {
 					if (interaction.member.id === interaction.guild.ownerID) {

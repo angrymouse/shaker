@@ -152,7 +152,7 @@ client.on('interaction', async interaction => {
 
 		whitelist.push(interaction.member.id);
 		interaction.member.setNickname(`${uri.punydecode(domain)}/`, 'User verified Handshake domain.')
-			.then(() => {
+			.then(async () => {
 				const role = interaction.guild.settings.get('verifiedRole');
 				if (role) {
 					interaction.member.roles.add(role);

@@ -92,7 +92,7 @@ client.on('interaction', async interaction => {
 			const id = interaction.options[0].value;
 			const channel = client.channels.get(id);
 			if (!channel.viewable) {
-				return interaction.reply('I cannot view this channel.' { ephemeral: true });
+				return interaction.reply('I cannot view this channel.', { ephemeral: true });
 			}
 			if (channel.type !== 'GUILD_TEXT') {
 				return interaction.reply('You must specify a text channel.');

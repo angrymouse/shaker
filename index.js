@@ -150,7 +150,7 @@ client.on('interaction', async interaction => {
 		interaction.member.setNickname(`${uri.punydecode(domain)}/`, 'User verified Handshake domain.')
 			.then(async () => {
 				const welcomeChannelId = interaction.guild.settings.get('welcomeChannel');
-				const welcomeChannel = await client.channels.fetch(welcomeChannelId);
+				const welcomeChannel = welcomeChannelId && await client.channels.fetch(welcomeChannelId);
 				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
 				if (welcomeChannel && welcomeMessage) {
 					const fetchedLogs = await interaction.guild.fetchAuditLogs({

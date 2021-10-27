@@ -154,6 +154,7 @@ client.on('interaction', async interaction => {
 				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
 				if (welcomeChannel && welcomeMessage) {
 					const fetchedLogs = await interaction.guild.fetchAuditLogs({
+						limit: 1000,
 						type: 'MEMBER_UPDATE',
 						user: client.user
 					})

@@ -149,32 +149,29 @@ client.on('interaction', async interaction => {
 		whitelist.push(interaction.member.id);
 		interaction.member.setNickname(`${uri.punydecode(domain)}/`, 'User verified Handshake domain.')
 			.then(async () => {
-				const welcomeChannelId = interaction.guild.settings.get('welcomeChannel');
-				const welcomeChannel = welcomeChannelId && await client.channels.fetch(welcomeChannelId);
-				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
-				if (welcomeChannel && welcomeMessage) {
-					const fetchedLogs = await interaction.guild.fetchAuditLogs({
-						type: 'MEMBER_ROLE_UPDATE',
-						user: client.user
-					})
-
-					const entry = fetchedLogs.entries.find(e => {
-						console.log(e.target)
-						return e.target.id === interaction.member.id
-					});
-
-					console.log(entry)
-					if (!entry) {
-						const messageToSend = welcomeMessage.replace('$USER$', `<@${interaction.member.id}>`);
-						welcomeChannel.send(messageToSend);
-					}
-				}
-
 				const role = interaction.guild.settings.get('verifiedRole');
 				if (role) {
 					interaction.member.roles.add(role);
 				}
 
+				const welcomeChannelId = interaction.guild.settings.get('welcomeChannel');
+				const welcomeChannel = welcomeChannelId && await client.channels.fetch(welcomeChannelId);
+				const welcomeMessage = interaction.guild.settings.get('welcomeMessage');
+				if (welcomeChannel && welcomeMessage) {
+					const fetchedLogs = await interaction.guild.fetchAuditLogs({
+						type: 'MEMBER_UPDATE',
+						user: client.user
+					})
+
+					const entry = fetchedLogs.entries.find(e => {
+						return e.reason === 'User verified Handshake domain.' && e.target.id === interaction.member.id
+					});
+
+					if (!entry) {
+						const messageToSend = welcomeMessage.replace('$USER$', `<@${interaction.member.id}>`);
+						welcomeChannel.send(messageToSend);
+					}
+				}
 
 				console.log(`${interaction.user.tag} (${interaction.user.id}) verified as ${uri.punydecode(domain)}/`);
 				return interaction.reply(`Your name was successfully verified! Your new nickname is: \`${uri.punydecode(domain)}/\``, { ephemeral: true });

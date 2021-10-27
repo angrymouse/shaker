@@ -160,6 +160,7 @@ client.on('interaction', async interaction => {
 
 					const entry = fetchedLogs.entries.find(entry => entry.target.id === interaction.member.id);
 
+					console.log(entry)
 					if (!entry) {
 						const messageToSend = welcomeMessage.replace('$USER$', `<@${interaction.member.id}>`);
 						welcomeChannel.send(messageToSend);

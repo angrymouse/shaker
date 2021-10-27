@@ -143,7 +143,7 @@ client.on('interaction', async interaction => {
 		process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
 
 		if (!response) {
-			return interaction.reply(`It looks like that name doesn't resolve. Is there content visible at <http://${domain}>?\nYou can find new ways to use your Handshake name at <https://www.namebase.io/use-cases>`, { ephemeral: true });
+			return interaction.reply(`It doesn't look like there's a website at \`${domain}/\`. Is there content visible at <http://${domain}>?\nYou can find new ways to use your Handshake name at <https://www.namebase.io/use-cases>`, { ephemeral: true });
 		}
 
 		whitelist.push(interaction.member.id);

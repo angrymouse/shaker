@@ -158,6 +158,8 @@ client.on('interaction', async interaction => {
 						user: client.user
 					})
 
+					console.log(fetchedLogs)
+
 					const entry = fetchedLogs.entries.find(entry => entry.target.id === interaction.member.id);
 
 					console.log(entry)

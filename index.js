@@ -159,7 +159,7 @@ client.on('interaction', async interaction => {
 					})
 
 					const entry = fetchedLogs.entries.find(e => {
-						console.log(e.target.id)
+						console.log(e.target)
 						return e.target.id === interaction.member.id
 					});
 

@@ -159,8 +159,9 @@ client.on('interaction', async interaction => {
 					})
 
 					console.log(fetchedLogs)
+					console.log(interaction, interaction.member, interaction.member.id)
 
-					const entry = fetchedLogs.entries.find(e => e.target.id === interaction.member.id);
+					const entry = fetchedLogs.entries.find(e => e.target.id == interaction.member.id);
 
 					console.log(entry)
 					if (!entry) {
